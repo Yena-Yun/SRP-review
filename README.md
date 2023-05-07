@@ -1,70 +1,172 @@
-# Getting Started with Create React App
+# SRP 실습 복습 (Auth, Todo)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 특징
+* React (CRA)
+* 클래스형 컴포넌트, context API, fetch 사용
 
-## Available Scripts
+## 코드 짜는 순서
+1. httpClient
+2. localStorage
+3. service
+4. context
+5. 최상단 index.js에서 모든 클래스 호출 + context 주입
 
-In the project directory, you can run:
+## API 스펙
 
-### `yarn start`
+### [출처: 선발과제 깃허브](https://github.com/walking-sunset/selection-task)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 1) Auth
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `yarn test`
+## 1-1) SignUp
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 요청
 
-### `yarn build`
+- URL: `/auth/signup`
+- Method: `POST`
+- Headers:
+  - Content-Type: `application/json`
+- Body:
+  - email: string
+  - password: string
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 응답 예시
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- status: 201 Created
+- body: 없음
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 1-2) SignIn
 
-### `yarn eject`
+### 요청
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- URL: `/auth/signin`
+- Method: `POST`
+- Headers:
+  - Content-Type: `application/json`
+- Body:
+  - email: string
+  - password: string
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 응답 예시
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- status: 200 OK
+- body
+  ```json
+  {
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwic3ViIjo0LCJpYXQiOjE2NTk5MDQyMTUsImV4cCI6MTY2MDUwOTAxNX0.DyUCCsIGxIl8i_sGFCa3uQcyEDb9dChjbl40h3JWJNc"
+  }
+  ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 2) Todo
 
-## Learn More
+## 2-1) createTodo
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 요청
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- URL: `/todos`
+- Method: `POST`
+- Headers:
+  - Authorization: `Bearer access_token`
+  - Content-Type: `application/json`
+- Body:
+  - todo: string
 
-### Code Splitting
+### 응답 예시
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- status: 201 Created
+- body
+  ```json
+  {
+    "id": 1,
+    "todo": "과제하기",
+    "isCompleted": false,
+    "userId": 1
+  }
+  ```
 
-### Analyzing the Bundle Size
+## 2-2) getTodos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 요청
 
-### Making a Progressive Web App
+- URL: `/todos`
+- Method: `GET`
+- Headers:
+  - Authorization: `Bearer access_token`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 응답 예시
 
-### Advanced Configuration
+- status: 200 OK
+- body
+  ```json
+  [
+    {
+      "id": 1,
+      "todo": "todo2",
+      "isCompleted": false,
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "todo": "todo3",
+      "isCompleted": false,
+      "userId": 1
+    }
+  ]
+  ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 2-3) updateTodo
 
-### Deployment
+### 요청
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- URL: `/todos/:id`
+- Method: `PUT`
+- Headers:
+  - Authorization: `Bearer access_token`
+  - Content-Type: `application/json`
+- Body:
+  - todo: string
+  - isCompleted: boolean
 
-### `yarn build` fails to minify
+### 요청 예시
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- URL: `/todos/1`
+- body
+  ```json
+  {
+    "todo": "Hello World",
+    "isCompleted": true
+  }
+  ```
+
+### 응답 예시
+
+- status: 200 OK
+- body
+  ```json
+  {
+    "id": 1,
+    "todo": "Hello World",
+    "isCompleted": true,
+    "userId": 2
+  }
+  ```
+
+## 2-4) deleteTodo
+
+### 요청
+
+- URL: `/todos/:id`
+- Method: `DELETE`
+- Headers:
+  - Authorization: `Bearer access_token`
+
+### 요청 예시
+
+- URL: `/todos/1`
+- body: 없음
+
+### 응답 예시
+
+- status: 204 No Content
+- body: 없음
