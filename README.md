@@ -3,13 +3,14 @@
 ## 특징
 * React (CRA)
 * 클래스형 컴포넌트, context API, fetch 사용
+* interface 파일에 선 추상 후 구현
 
-## 코드 짜는 순서
-1. httpClient
-2. localStorage
-3. service
-4. context
-5. 최상단 index.js에서 모든 클래스 호출 + context 주입
+## 코드 작성한 순서
+1. 토큰을 관리하는 storage (로컬스토리지)
+2. fetch 요청의 공통사항을 처리하는 httpClient
+3. API 요청을 하는 service
+4. 요청 반환값과 요청 함수를 내려보내는 context
+5. 최상단 index.js에서 모든 클래스 호출 및 Provider로 context 주입
 
 ## API 스펙
 
