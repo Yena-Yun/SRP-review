@@ -1,11 +1,12 @@
 # SRP 실습 복습 (Auth, Todo)
+수업 시간에 실습한 코드 다시 짜면서 복습
 
-## 특징
-* React (CRA)
+## 배운 점
 * 클래스형 컴포넌트, context API, fetch 사용
 * interface 파일에 선 추상 후 구현
 
-## 코드 작성한 순서
+## 코드 작성 순서
+0. Base Code (components, App.js 셋팅)
 1. 토큰을 관리하는 storage (로컬스토리지)
 2. fetch 요청의 공통사항을 처리하는 httpClient
 3. API 요청을 하는 service
