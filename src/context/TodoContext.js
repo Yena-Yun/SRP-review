@@ -24,12 +24,16 @@ export const TodoProvider = ({ children, todoService }) => {
       id,
     });
 
-    setTodos((prev) => [...prev, newTodo]);
+    setTodos(
+      todos.map((todo) => {
+        return todo.id === id ? newTodo : todo;
+      })
+    );
   };
 
   const deleteTodo = async (id) => {
     await todoService.delete(id);
-    setTodos(todos.filter((todo) => todo.id !== id)); // 삭제 후에 todos도 업데이트
+    setTodos(todos.filter((todo) => todo.id !== id)); // 삭제 후에 todos 상태 업데이트
   }
 
   return (
