@@ -25,17 +25,17 @@ export class TodoService {
     return response.json();
   }
 
-  async update(newTodo, id) {
-    const response = await this.httpClient.fetchRequest(`/todos/:${id}`, {
+  async update({ todo, isCompleted, id }) {
+    const response = await this.httpClient.fetchRequest(`/todos/${id}`, {
       method: 'PUT',
-      body: JSON.stringify({ todo: newTodo, isCompleted: false }),
+      body: JSON.stringify({ todo, isCompleted }),
     });
 
     return response.json();
   }
 
   async delete(id) {
-    await this.httpClient.fetchRequest(`/todos/:${id}`, {
+    await this.httpClient.fetchRequest(`/todos/${id}`, {
       method: 'DELETE',
     });
   }
