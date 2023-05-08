@@ -35,6 +35,4 @@ export class AuthService {
   async logout() {
     this.tokenStorage.remove();
   }
-
-
 }
