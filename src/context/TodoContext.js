@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthContext';
 
 const TodoContext = createContext(null);
 export const useTodo = () => useContext(TodoContext);
@@ -7,10 +8,15 @@ export const useTodo = () => useContext(TodoContext);
 export const TodoProvider = ({ children, todoService }) => {
   const [todos, setTodos] = useState([]);
 
+  const { islogin } = useAuth();
+
+  // islogin 상태일 때
   // todos가 변경될 때마다(수정, 삭제 등) get() 함수로 todos를 받아와서 setTodos에 셋팅
   useEffect(() => {
-    todoService.get().then(setTodos); // .then(data) => setTodos(data) 축약형
-  }, [todoService, setTodos]);
+    if (islogin) {
+      todoService.get().then(setTodos); // .then(data) => setTodos(data) 축약형
+    }
+  }, [islogin, todoService, setTodos]);
 
   const createTodo = async (todo) => {
     const newTodo = await todoService.create(todo);

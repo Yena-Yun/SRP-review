@@ -17,7 +17,7 @@ function Auth() {
     }));
   };
 
-  const { signin, signup, logout } = useAuth();
+  const { signin, signup, logout, islogin } = useAuth();
 
   const handleSignin = () => {
     signin(email, password)
@@ -41,9 +41,14 @@ function Auth() {
           <input value={password} name='password' onChange={saveUserInputs} />
         </label>
       </div>
-      <button onClick={handleSignin}>signin</button>
-      <button onClick={handleSignup}>signup</button>
-      <button onClick={logout}>logout</button>
+      {islogin ? (
+        <button onClick={logout}>logout</button>
+      ) : (
+        <>
+          <button onClick={handleSignin}>signin</button>
+          <button onClick={handleSignup}>signup</button>
+        </>
+      )}
     </form>
   );
 }

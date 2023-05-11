@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTodo } from '../context/TodoContext';
+import { useAuth } from '../context/AuthContext';
 
 function Todos() {
   const [newTodo, setNewTodo] = useState('');
@@ -8,6 +9,7 @@ function Todos() {
   const [isEdit, setIsEdit] = useState(false);
 
   const { todos, createTodo, updateTodo, deleteTodo } = useTodo();
+  const { islogin } = useAuth();
 
   const saveUserInput = ({ target }) => {
     setNewTodo(target.value);
@@ -57,7 +59,7 @@ function Todos() {
     <div>
       <input value={newTodo} onChange={saveUserInput} />
       <button onClick={handleCreate}>create</button>
-      {todos?.map(({ id, todo, isCompleted }) => (
+      {islogin && todos?.map(({ id, todo, isCompleted }) => (
         <li key={id}>
           <input
             type='checkbox'
