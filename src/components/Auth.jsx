@@ -29,18 +29,26 @@ function Auth() {
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <div>
-        <label>
-          email
-          <input value={email} name='email' onChange={saveUserInputs} />
-        </label>
-      </div>
-      <div>
-        <label>
-          password
-          <input value={password} name='password' onChange={saveUserInputs} />
-        </label>
-      </div>
+      {!islogin && (
+        <>
+          <div>
+            <label>
+              email
+              <input value={email} name='email' onChange={saveUserInputs} />
+            </label>
+          </div>
+          <div>
+            <label>
+              password
+              <input
+                value={password}
+                name='password'
+                onChange={saveUserInputs}
+              />
+            </label>
+          </div>
+        </>
+      )}
       {islogin ? (
         <button onClick={logout}>logout</button>
       ) : (

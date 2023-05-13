@@ -9,7 +9,6 @@ export class AuthService {
   constructor(httpClient, tokenStorage) {
     this.httpClient = httpClient;
     this.tokenStorage = tokenStorage;
-    this.islogin = this.tokenStorage.get();
   }
 
   async signin(email, password) {

@@ -22,6 +22,8 @@ export class TodoService {
 
   async get() {
     const response = await this.httpClient.fetchRequest('/todos');
+    console.log(response);
+
     return response.json();
   }
 

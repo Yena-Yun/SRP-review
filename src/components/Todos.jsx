@@ -9,6 +9,8 @@ function Todos() {
   const [isEdit, setIsEdit] = useState(false);
 
   const { todos, createTodo, updateTodo, deleteTodo } = useTodo();
+  // console.log('todos: ' + JSON.stringify(todos));
+
   const { islogin } = useAuth();
 
   const saveUserInput = ({ target }) => {
@@ -59,7 +61,7 @@ function Todos() {
     <div>
       <input value={newTodo} onChange={saveUserInput} />
       <button onClick={handleCreate}>create</button>
-      {islogin && todos?.map(({ id, todo, isCompleted }) => (
+      {islogin && todos.length > 0 && todos.map(({ id, todo, isCompleted }) => (
         <li key={id}>
           <input
             type='checkbox'

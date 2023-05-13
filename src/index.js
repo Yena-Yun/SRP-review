@@ -19,7 +19,7 @@ const authService = new AuthService(httpClient, localTokenStorage);
 const todoService = new TodoService(httpClient);
 
 root.render(
-  <AuthProvider authService={authService}>
+  <AuthProvider authService={authService} tokenStorage={localTokenStorage}>
     <TodoProvider todoService={todoService}>
       <App />
     </TodoProvider>
